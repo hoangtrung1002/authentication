@@ -7,7 +7,7 @@ export class AuthService {
   constructor(private readonly userService: UserService) {}
   async signUp(createUserDTO: CreateUserDto) {
     const user = await this.userService.findByEmail(createUserDTO.email);
-    if (!user) throw new ConflictException('User already exists');
+    if (user) throw new ConflictException('User already exists');
     return await this.userService.create(createUserDTO);
   }
 }
